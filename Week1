@@ -1,0 +1,65 @@
+DATA TYPES:
+
+ObjectCorrections = 6 # Times I had to re-run the JSON debugger for my object HW
+
+StillAwake = True # State of me, doing my HW right now
+
+DoneWithHW = False # State of the pile of HW yet to be done
+
+HoursComputing = 3.5 # Number of hours spent making a homemade switch for Physical Computing today
+
+TelevisionOn = False # No time for TV
+
+OnMyMind = ["HW", "Boyfriend", "money", "roommate"] # Things presently taking up brain space
+
+MyBugdet = {"rent": "$1,000", "Transit": "$179", "school": "$40,000", "food": "$500"} # Places my money is going
+
+
+OBJECTS:
+
+
+{
+	"name": "Jane Doe",
+	"height": "5ft 5in",
+	"hairColor": "red",
+	"pets": ["cat", "bird", "rabbit"],
+	"yearBorn": 1990,
+	"age": 27
+}
+
+
+STORY:
+
+# let the user know what's going on
+print ("Welcome to MFA IxD!")
+print ("Answer the questions below to play.")
+print ("-----------------------------------")
+
+# variables containing all of your story info
+emotion1 = raw_input("Name an emotion: ")
+location1 = raw_input("Name any town or city other than NYC: ")
+home1 = raw_input("Name any object that can act as a container: ")
+famousCrush = raw_input("A famous person you have a crush on: ")
+yourMoney = raw_input("List any whole number: ")
+yourName = raw_input("What's your name?: ")
+verb1 = raw_input("Enter a verb: ")
+aNumber = raw_input("Enter another whole number: ")
+moneyNum = int(yourMoney)
+moneyNum2 = int(aNumber)
+sum = moneyNum + moneyNum2 
+myNewMoney = str(sum)
+object1 = raw_input("Name any item: ")
+pronoun1 = raw_input("Are you a he or she?: ")
+pronoun2 = raw_input("Are you a him or her?: ")
+
+# this is the story. it is made up of strings and variables.
+story = "Once upon a time " + yourName + " was admitted to the MFA IxD program at SVA, " + pronoun1 + " was so full of " + emotion1 + "! " \
+"Finally, " + yourName + " could leave the small town of " + location1 + " and travel to the big city! " \
+"When " + yourName + " got to New York, " + pronoun1 + " ran into " + famousCrush + " who asked " + pronoun2 + " on a date, but " + yourName + " said," + """ "no, I have to focus on my studies at SVA." """ \
+"Feeling purposeful, " + yourName + " went in search of an apartment, but the best " + pronoun1 + " could find for $" + yourMoney + " was a " + home1 + ". "\
+"To make a little extra cash " + yourName + " was excited to get a job " + verb1 + " for Liz Danzico. " \
+"With the extra money, " + yourName + " was making a total of $" + myNewMoney + " and with it " + pronoun1 + " bought a " + object1 + ", and lived happily ever after."
+
+# finally we print the story
+print (story)
+
