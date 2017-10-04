@@ -1,0 +1,490 @@
+# PComp
+Physical Computing
+
+player = { 
+    "name": "p1", 
+    "score": 0,
+    "items" : ["milk"],
+    "friends" : [],
+    "location" : "start"
+}
+
+rooms = {
+    "room1" : "The Studio",
+    "room2" : "The kitchen",
+    "room3" : "Liz Danzico's Office"
+}
+
+import random 
+import sys 
+
+def rollDice(minNum, maxNum, difficulty):
+    result = random.randint(minNum,maxNum)
+    print "You roll a: " + str(result) + " out of " + str(maxNum)
+
+    if result <= difficulty:
+        print "trying again...."
+        
+        raw_input("press enter >")
+        rollDice(minNum, maxNum, difficulty)
+
+    return result
+
+def printGraphic(name):
+    if (name == "Shia"):
+        print '++ooooooooossssssssssssssssyyyyyyyyyyy+:/+syyyyyyyyyyyyyyyyyyyyyyyysssssssssssso'
+        print '++ooooooooossssssssssssssssssyyyyyyys..:::-syyyyyyyyyyyyyyyyyyyyyyssssssssssssso'
+        print '++++oooooooosssssssssssssssssssssyyy+-/+o//oyyyyyyyyyyyyyyyyyyyyssssssssssssssoo'
+        print '++++ooooooooossssssssssssssssssssssss/+/+o+ssyyyyyyyyyyyyyyyyyyysssssssssssssooo'
+        print '++++oooooooooooosssssssssssssssssssss/..--/ossssssssssssssssssssssssssssssssoooo'
+        print '+++++ooooooooooooooossssssssssssss+-` ---//``:ossssssssssssssssssssssssssssooooo'
+        print '++++++oooooooooooooooosssssssssso.`   `::-`````+ssssssssssssssssssssssssssoooooo'
+        print '+++++++ooooooooooooooooooosssss/``  ````````` ``/sssssssssssssssssssssssoooooooo'
+        print '++++++oooooooooooooooooossossss+..` `````````  `-sssssssssssssssssssssssssoooooo'
+        print '+++++ooooooooooooosssssssssssss+/o:   ```````./+/sssssssssssssssssssssssssssoooo'
+        print '++++ooooooooossssssssssssssssss:++-   ```````/+//osyysyyyyyyyyyssssssssssssssooo'
+        print '++++ooooooooossssssssssssssssss:/+     ``   `:s-//syysyyyyyyyyyysssssssssssssooo'
+        print '++++oooooooooosssssssssssssssss///`        ` .s:/+sssssssyysysssssssssssssssssso'
+        print '++++oooooooooooossssssssssssssso/:.        `  o:/ossssssssssssssssssssssssssssso'
+        print '+++++oooooooooosssssssssssssssss+:/-:-.    `-:/:-sssssssssssssssssssssssssssssoo'
+        print '+++oooooooooooosssssssssssssssso`.://.`    .://+ssssssssssssssssssssssssssssssoo'
+        print 'ooooooooooossssssssssssssssssss. ``::-.    `.-..ssssssssssssssssssssssssssssssss'
+        print 'oooooooooooossssssssssssssssss/  `   `-/:-    ``:sssssssssssssssssssssssssssssss'
+        print 'ooooooooooooooosssssssssssssss```` `/ssssso-`````ossssssssssssssssssssssssssssss'
+        print '       It\'s Shia LaBoeuf who says to JUST DO IT!        '
+
+    if (name == "gem"):
+        print  '      ____      '
+        print  '     /\__/\     '
+        print  '    /_/  \_\    '
+        print  '    \ \__/ /    '
+        print  '     \/__\/     '
+        print  '                '
+        print  '     You\'ve found the super secret SVA gem. You have free tuition! ' 
+
+    if (name == "crystalball"):
+        print '    _...._'
+        print '  .`      `.'
+        print ' / ***      \ '
+        print ': **         : '        
+        print ':            :'       
+        print ' \          /'       
+        print ' ` -.,,,,.-'              
+        print '   _(    )_'
+        print '  )        ('
+        print ' (          )'
+        print '  `-......-`'
+     
+        print  '    I\'ts your future! RUN!     ' # this one is escaped!
+
+    if (name == "Liz"):
+        print 'mmyo/ohy+ydNNs-`   `      ``````````````````......:+yymmmNNMNNNdydmddmmo```:-```'
+        print 'yhys/omNNNMm+.`                ````````````````....-/yhmNNNNmNNdsNmNmmNNdoo:`   '
+        print 'NMdh+smMMMNs-``                ` ``````````````.....-/shmNNmmmNNNmNmymNmdddd-   '
+        print 'NNhhyhhNNNh:.``                ```````````````..``..-:/ymmNNMNdNNmhNyyhhmNMd`   '
+        print 'mhdNNhddmy/.```                ````````````````.....--:+dNNNNmhymNmhmmNmmNm-    '
+        print 'dmmmdmNmh+-.````..-...`` ````````````````````````...----smNNMMMNNNNmdmNNh-.`    '
+        print 'NdmMMMNy/-.`.:///:/+shhhyo/-`````````````.-:---::--.----:+dMMMNNMMMyNmmms.      '
+        print 'hNmNMMN+..`.-```````..:oyhhys-`````..-+sydmdhyo++oso/---::hMMMMNmmNMNNNm-y`     '
+        print 'oyhmmdmyoooooooooo++o+/::--:/-`` ``.-+yyss+:-......-++---:hMMMNms+hMNmmNhh.     '
+        print 'ssshNdNMMNMs.`..:+++yhmmdhddhs/`  `-/syhhhhdhyshhsssssydmmNNNyhyddoNmdshm/      '
+        print 'm+o/dNy//yM/``./shy/NdNN+sdho/NmdhdmNdmmdyNmNNyhhy:-...:MNmMNo/:ydsm+.`/-       '
+        print 'M+--sdo.``:m` ``.:oo+++ooooo//Mh:-/mMyyyssoossssso/-...omosmmo/-/oh+-.-.        '
+        print 'Ny.:yy+.`` /h. ```...--::::-+Ny`  `-mm+///:------...``+d--/yhhy/-ym+  `:::.     '
+        print 'ydydh:-.``` -o++++oooooooooss+.`  `./yhsssso++//::::/sy..-/:+yo-/h-      `.     '
+        print '+odmy/...```````````........-.`   `.-:/:-----://////:-..-::oymhsshso.           '
+        print 'mmNds-...``````````````````````    ``-:---....-----------//NNmmmmddds           '
+        print 'NNMy-.`...`````````````````..``     `.::--........------:+sdmdhNdhmy:           '
+        print 'mNMMs:-:....````````````...``````````.-:/:-.......-----:/++sdhmmmNmd:`          '
+        print '`--hMMNm-....`````````...``.-+o+-.--/o/:://-.......-----sdhmNNMMNhmm-`          '
+        print '  .-omhh:.......````...`````.--.-:--:/:---:/:--.--------yoomNmdmNmN+            '
+        print '    `++`............`````   ````.....---..--::--::-:::-:` -NNmdddm+             '
+        print '      `--..........``````     ``````.........:----------.-:+-+++:  `            '
+        print ' .-.`` `/-.....```.`````````.------://:::::-.--.-----//:syh:.`                  '
+        print 'yMMMMMMMM+.....`````.-/+ooo+/:-::::/+osss+:-.-..---::-:dMMMMMMNmhs+`            '
+        print 'MMMMMMMMMN-.....``````````.........--:--........--:.`-NMMMMMMMMMMMMh`           '
+        print 'MMMMMMMMMMm:.......```````````...............---+/``-NMMMMMMMMMMMMMMh-`         '
+        print 'MMMMMMMMMMN/:----...`````````..``...........--os-```yMMMMMMMMMMMMMMMMMMmsyso:`  '
+        print 'MMMMMMMMMMm+/://:--..........`..`..........--sy-````NMMMMMMMMMMMMMMMMMMMMMMMMMNM'
+        print 'MMMMMMMMMNdo/:.``       ```..-...........---+h:````.MMMMMMMMMMMMMMMMMMMMMMMMMMMM'
+        print 'MMMMMMMMMNh+:-:-.``           `.-::-------:oho.````.MMMMMMMMMMMMMMMMMMMMMMMMMMMM'
+        print 'MMMMMMMMMms/::-://::.`             `.-://+sos/.` ``-MMMMMMMMMMMMMMMMMMMMMMMMMMMM'
+        print 'MMMMMMMMNd+:::----::/+:.``             `:+oos-.` ``/MMMMMMMMMMMMMMMMMMMMMMMMMMMM'
+        print 'MMMMMMMMNy/::/:---::--::::--.``        ````.-..``  -MMMMMMMMMMMMMMMMMMMMMMMMMMMM'
+        print 'MMMMMMMMNy+//+//::::-````` `...`      ````````````` hMMMMMMMMMMMMMMMMMMMMMMMMMMM'
+        print 'MMMMMMMMMNhsoooo+////.```              ``   ````````.NMMMMMMMMMMMMMMMMMMMMMMMMMM'
+        print 'MMMMMMMMMMMMmdhhyso/`  `.``              `  `````````-MMMMMMMMMMMMMMMMMMMMMMMMMM'
+        print 'MMMMMMMMMMMMMMMNmdho``   `.`          `  ` ```````````/MMMMMMMMMMMMMMMMMMMMMMMMM'
+        print 'MMMMMMMMMMMMMMMMMMNNh-`      ```````` `````  ````````` sMMMMMMMMMMMMMMMMMMMMMMMM'
+        print 'MMMMMMMMMMMMMMMMMMMMMh..`        ````  ```` `````````` `dMMMMMMMMMMMMMMMMMMMMMMM'
+        print 'MMMMMMMMMMMMMMMMMMMMN` .-``      `````````````````  ````:MMMMMMMMMMMMMMMMMMMMMMM'
+        print 'MMMMMMMMMMMMMMMMMMMMM-   ```  ````````````````````    ```dMMMMMMMMMMMMMMMMMMMMMM'
+        print  '        It\'s Liz Danzico!      '
+
+    if (name == "title"):
+        print ' _______  _______  _        _______           _______  _______  ______  '
+        print '(  ____ \(  ___  )( (    /|(  ____ \|\     /|(  ____ \(  ____ \(  __  \ '
+        print '| (    \/| (   ) ||  \  ( || (    \/| )   ( || (    \/| (    \/| (  \  )'
+        print '| |      | |   | ||   \ | || (__    | |   | || (_____ | (__    | |   ) |'
+        print '| |      | |   | || (\ \) ||  __)   | |   | |(_____  )|  __)   | |   | |'
+        print '| |      | |   | || | \   || (      | |   | |      ) || (      | |   ) |'
+        print '| (____/\| (___) || )  \  || )      | (___) |/\____) || (____/\| (__/  )'
+        print '(_______/(_______)|/    )_)|/       (_______)\_______)(_______/(______/ '                                                                      
+        print  '_______  _______  _        _______           _______  _______  ______  '
+        print '(  ____ \(  ___  )( (    /|(  ____ \|\     /|(  ____ \(  ____ \(  __  \ '
+        print '| (    \/| (   ) ||  \  ( || (    \/| )   ( || (    \/| (    \/| (  \  )'
+        print '| |      | |   | ||   \ | || (__    | |   | || (_____ | (__    | |   ) |'
+        print '| |      | |   | || (\ \) ||  __)   | |   | |(_____  )|  __)   | |   | |'
+        print '| |      | |   | || | \   || (      | |   | |      ) || (      | |   ) |'
+        print '| (____/\| (___) || )  \  || )      | (___) |/\____) || (____/\| (__/  )'
+        print '(_______/(_______)|/    )_)|/       (_______)\_______)(_______/(______/ '
+        print' _______ _________          ______   _______  _       _________'
+        print '(  ____ \\__   __/|\     /|(  __  \ (  ____ \( (    /|\__   __/'
+        print '| (    \/   ) (   | )   ( || (  \  )| (    \/|  \  ( |   ) (   '
+        print '| (_____    | |   | |   | || |   ) || (__    |   \ | |   | |   '
+        print '(_____  )   | |   | |   | || |   | ||  __)   | (\ \) |   | |   '
+        print       ') |   | |   | |   | || |   ) || (      | | \   |   | |   '
+        print '/\____) |   | |   | (___) || (__/  )| (____/\| )  \  |   | |   '
+        print '\_______)   )_(   (_______)(______/ (_______/|/    )_)   )_(   '
+                                                                       
+
+
+
+def gameOver():
+
+    printGraphic("gameOver")
+
+    print "-------------------------------"
+    print "Stop playing games, start burning LEDs. Game Over."
+    print "name: " + player["name"]
+    print "score: " + str(player["score"])
+    return
+
+def lizOffice():
+    print "You know you shouldln't, but you open Liz\'s office door anyway..."
+    print "You stop when you notice something shiny under her desk."
+    raw_input("press enter >")
+
+    print "You consider your options."
+    print "options: [ search the office , leave the office]"
+
+    pcmd = raw_input("press enter >")
+
+    if (pcmd == "search the office"): 
+        print "You search the office..."
+        print "Let's roll a dice to see what happens next!"
+
+        difficulty = 10
+        roll = rollDice(0, 20, difficulty)
+        
+        if (roll >= difficulty):
+
+            print "It looks like a magic gem. Right here on the 3rd floor!"
+            print "Do you take the gem?"
+            
+            printGraphic("gem")
+
+            pcmd = raw_input("yes or no >")
+
+            if (pcmd == "no"):
+                printGraphic("Liz")
+                print "You leave the gem and look up to see Liz Danzico standing behind you!"
+                print "You should have made an appointment, but she gives you an inspiring and supportive talk about your studies anyway."
+                print "you leave the studio...you're so lucky."
+                thirdFloor()
+
+            elif (pcmd == "yes"):
+                print "You pick it up and return to the studio."
+                player["items"].append("gem")
+                player["score"] += 100
+                theStudio()
+
+            else:
+                printGraphic("Liz")
+                print "You should have made an appointment, but she gives you an inspiring and supportive talk about your studies anyway."
+                theStudio()
+
+        else:
+            print "Turns out it's nothing... stop snooping."
+            theStudio()
+
+    elif (pcmd == "leave the office"):
+        print "You decide not to be nosey...but you wonder what that shiny thing was..."
+        pcmd = raw_input(">")
+        theStudio()
+
+    else:
+        print "Nope. Try again."
+        lizOffice()
+
+def theStudio():
+    print "You stand in the studio, surveying all you see."
+    print "What should you do?"
+    print "Your options: [ food time, wander, open that door... ]"
+
+    pcmd = raw_input(">") # user input
+
+    # player options
+    if (pcmd == "food time"):
+        print "You go to check out the kitchen area..."
+
+        raw_input("press enter >")
+        theKitchen()
+
+    # path option
+    elif (pcmd == "wander"):
+        print "You walk around the whole floor and end up back in the studio..."
+        raw_input("press enter >")
+        theStudio() # path 1
+
+    # path2 option
+    elif (pcmd == "open that door..."):
+        print "You see Liz's office door ajar and Gwen isn't at her desk..."
+        print "You've always wanted to know what's in there..."
+        raw_input("press enter >")
+        lizOffice() # path 2
+
+    # exiting / catching errors and crazy inputs
+    elif (pcmd == "exit"):
+        print "you exit."
+        return # exit the application
+
+    else:
+        print "I don't understand that"
+        theStudio() # the beginning
+
+def thirdFloor():
+    print "You find yourself at the entrace to the 3rd floor, MFA IxD studio. You forgot your ID."
+    print "You slack someone to open the door for you."
+    raw_input("press enter >")
+
+    printGraphic("Shia")
+    print "Shia LaBoef has answered your slack call and opens the door!"
+    print "you were feeling down and tired, but he angrily tells you to just do it."
+    print "...do you agree?"
+    raw_input("press enter >")
+    
+    print "You consider your options."
+
+    if ("gem" in player["items"]):
+        print "options: [ look around , talk to Shia , give gem, ignore Shia ]"
+    else:
+        print "options: [ look around, talk to Shia, ignore Shia ]"
+
+    pcmd = raw_input(">")
+
+    # option 1: look around
+    if (pcmd == "look around"):
+        print "You look around...and wander away...you're really losing it."
+        theStudio() 
+
+     # option 2: ignore Shia
+    if (pcmd == "ignore Shia"):
+        print "Not sure why you don't like Shia, but okay, off we go."
+        theStudio() 
+    
+    # option 3: talk to Shia
+    elif (pcmd == "talk to Shia"):
+        print "You try and talk to Shia LaBoef!"
+        print "Let's roll a dice to see what happens next!"
+        raw_input("press enter to roll >")
+
+        difficulty = 5
+        chanceRoll = rollDice(0,20,difficulty) # roll a dice between 0 and 20
+
+        # if the roll is higher than 5... 75% chance
+        if (chanceRoll >= difficulty):
+            print "It's your lucky day! He want's to be your friend."
+            player["score"] += 50
+        else:
+            print "You try to talk to Shia, but... when you look up again he's gone...you really need more sleep."
+            theStudio() # try again
+        
+        # nested actions and ifs
+        pcmd = raw_input("be friends with Shia LaBoef? yes or no >")
+
+        # yes
+        if (pcmd == "yes"):
+
+            print "Shia becomes your friend!"
+            print "What else do you really need in life?"
+
+            player["friends"].append("Shia")
+            player["score"] = int(player["score"]) + 100 # conversion
+            print "Your score increased to: " + str(player["score"])
+            
+            gameOver()
+
+        # no
+        elif (pcmd == "no"):
+            printGraphic("Liz")
+            print "Liz scolds you, 'Shia is a guest speaker, that's rude...and poor networking!'"
+            print "You hang your head in shame."
+
+            player["score"] = int(player["score"]) - 100 # conversion
+            print "Your score decreased to: " + str(player["score"])
+
+            theStudio()
+        
+        # try again
+        else:
+            thirdFloor()
+
+    elif (pcmd == "give gem"):
+        print "You give the gem to Shia LaBoef!"
+        raw_input("press enter>")
+        printGraphic("gem")
+        print "You just gave away your free tuition, what's wrong with you?"
+        gameOver()
+
+    # try again
+    else:
+        print "I don't understand."
+        thirdFloor() 
+
+def theKitchen():
+    print "You stand in the kitchen."
+    print "You can sit down and have a coffee, or keep wandering."
+    
+    if (("gem" in player["items"]) and not ("Shia" in player["friends"])):
+        print "Your options: [ have a coffee, keep wandering , open the fridge, give Shia the gem]"
+
+    elif ("gem" in player["items"]):
+        print "Your options: [ have a coffee, keep wandering, open the fridge ]"
+
+    else:
+        print "Your options: [ have a coffee, keep wandering, open the fridge ]"
+
+    pcmd = raw_input(">") # user input
+
+    # player options
+    if (pcmd == "have a coffee"):
+        print "The coffee break feels good. What to do now?"
+
+        raw_input("press enter >")
+        theKitchen()
+
+    # path option
+    elif (pcmd == "keep wandering"):
+        print "Maybe it's time to get some work done..."
+        raw_input("press enter >")
+        theStudio() # path 1
+
+    # path2 option
+    elif (pcmd == "open the fridge"):
+        print "There's unlabeled and undated food in here. Where are the kitchen monitors?"
+        raw_input("press enter >")
+        theFridge() # path 2
+
+    # exiting / catching errors and crazy inputs
+    elif (pcmd == "exit"):
+        print "you exit."
+        return # exit the application
+        
+    elif (pcmd == "give Shia the gem"):
+        printGraphic("Shia")
+        print "That was a kind idea...but you just gave away free tuition - what's wrong with you?"
+
+        print "'You shouldn't have just done that.\", he says." # escaped
+        
+        gameOver()
+
+    else:
+        print "I don't understand that"
+        theKitchen() # try again
+
+def theFridge():
+    #what's in there?
+
+    print "You consider your options."
+
+    if ("Eric" in player["friends"]):
+        print "There\'s nothing good in here."
+        print "Your options: [ close the fridge]"
+
+    else:
+        print "options: [ search for your food , close the fridge]"
+
+    pcmd = raw_input(">") 
+
+    if (pcmd == "search for your food"): 
+        print "You search the fridge..."
+        print "Let's roll a dice to see what happens next!"
+
+        difficulty = 10
+        roll = rollDice(0, 20, difficulty)
+        
+        if (roll >= difficulty):
+
+            printGraphic("crystalball")
+            print "Eric Forman walks up behind you, 'pass me some pizza and let's go talk about your future!'"
+            print "Do you really want to talk about your future right now?"
+            
+
+            pcmd = raw_input("yes, no, uhhh >")
+
+            if (pcmd == "no"):
+                print "'Uhhhhhh,' you say, staring blankly."
+                theFridge()
+
+            elif (pcmd == "yes"):
+                print "Eric says, 'Sounds great! Ah, but I forgot I have a meeting with Liz Danzico. Rain check!."
+                print "You're brave to discuss your future and now you're friends with Eric! Good for you."
+                player["friends"].append("Eric")
+                player["score"] += 100
+                theStudio()
+
+            elif (pcmd == "uhhh") :
+                printGraphic("Liz")
+                print "You should probably stop munching and get some work done..."
+                print "You jet out of the studio in shock!"
+                thirdFloor()
+
+            else:
+                printGraphic("Liz")
+                print "You should probably stop munching and get some work done..."
+                theStudio()
+
+        else:
+            print "Eh, not that hungry, I guess."
+            theKitchen()
+
+    elif (pcmd == "close the fridge"):
+        print "Eh, not that hungry, I guess."
+        pcmd = raw_input(">")
+        theKitchen()
+
+    else:
+        print "Nope. Try again."
+        theFridge()       
+
+def introStory():
+    print "Greetings new student! What was your name again? I'm so bad with names."
+    player["name"] = raw_input("Please enter your name >")
+
+    print "Welcome to the 3rd floor MFA IxD Studio, " + player["name"] + "!"
+    print "The story so far..."
+    print "You survived your 7.5 hour commute here from your home three miles away..."
+    print "There's so much work to be done but you're soooo tired."
+    print "The studio seems odd tonight though...what's going on?"
+    print "Do you really want go in? might be nice to go home and nap?."
+
+    pcmd = raw_input("please choose yes or no >")
+
+   
+    if (pcmd == "yes"):
+        print "Ah yes...here we go."
+        raw_input("press enter >")
+        thirdFloor()
+    else:
+        print "LOL. No you definitely need to get to work."
+        pcmd = raw_input("press enter >")
+        introStory() 
+
+
+
+def main():
+    printGraphic("title") 
+    introStory() 
+
+main() 
