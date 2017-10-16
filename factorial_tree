@@ -1,0 +1,44 @@
+var angle = 0;
+var slider;
+
+
+
+function setup() {
+  createCanvas(640, 400);
+  //slider = createSlider(2, TWO_PI, PI / 4, 0.01);
+}
+
+function draw() {
+  angleMode(DEGREES);
+  var myDegrees = map(mouseX, 0,width, 0,360);
+  //background(255, 203, 164, 90);
+  background(0, 0, 0, 90);
+  //c1 = color(255, 0, 0, 0.2 * 255);
+  //c2 = color(0, 0, 255, 0.2 * 255);
+  //background(lerpColor(c1, c2, 0.5));
+  angle = myDegrees;
+  //angle = slider.value();
+  //stroke(0);
+  stroke(255, 203, 164, 90);
+  translate(320, height);
+  branch(110);
+
+}
+
+function branch(len) {
+  line(0, 0, 0, -len * 2);
+  translate(0, -len);
+  if (len > 3) {
+    push();
+    rotate(angle);
+    branch(len * .7);
+    pop();
+    push();
+    rotate(-angle);
+    branch(len * .7);
+    pop();
+   
+  }
+
+  //line(0, 0, 0, -len * 0.67);
+}
